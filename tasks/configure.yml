@@ -1,0 +1,6 @@
+---
+# TODO: PhpMyAdmin configuration
+
+- include_tasks: configure-nginx.yml
+  when: phpmyadmin_configure_http_server and phpmyadmin_http_server == "nginx"
+  tags: ['phpmyadmin-install']

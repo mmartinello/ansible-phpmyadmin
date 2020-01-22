@@ -1,0 +1,4 @@
+- Non far creare la NGINX include dir (deve farlo il ruolo di Nginx!)
+- Installare tramite APT
+- Configurare Apache
+- Configurare Nginx come sito anziché come location

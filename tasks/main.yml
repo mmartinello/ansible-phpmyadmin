@@ -1,0 +1,9 @@
+---
+- include_tasks: vars.yml
+  tags: ['always']
+
+- include_tasks: install.yml
+  tags: ['phpmyadmin-install']
+
+- include_tasks: configure.yml
+  tags: ['phpmyadmin-install']

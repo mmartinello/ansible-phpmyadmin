@@ -1,0 +1,5 @@
+---
+- name: Set installation method
+  set_fact:
+    phpmyadmin_install_method: archive
+  when: phpmyadmin_install_method == "package" and ansible_distribution_release|lower == "buster"

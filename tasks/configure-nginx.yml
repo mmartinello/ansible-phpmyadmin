@@ -1,0 +1,21 @@
+---
+- name: Ensure that Nginx include directory exists
+  file:
+    path: "{{ nginx_include_dir }}"
+    state: directory
+
+- name: Copy phpMyAdmin Nginx configuration file
+  vars:
+    phpmyadmin_location: /phpmyadmin
+  template:
+    src: templates/phpmyadmin.conf.j2
+    dest: "{{ nginx_include_dir }}/phpmyadmin.conf"
+  notify: Reload Nginx
+
+- name: Include phpMyAdmin Nginx configuration file
+  blockinfile:
+    path: "{{ nginx_default_conf_file }}"
+    block: |
+      include {{ nginx_include_dir }}/phpmyadmin.conf;
+    insertbefore: "}"
+  notify: Reload Nginx

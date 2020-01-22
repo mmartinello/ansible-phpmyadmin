@@ -1,0 +1,3 @@
+---
+- include_tasks: install-archive.yml
+  when: phpmyadmin_install_method == "archive"
