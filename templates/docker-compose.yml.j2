@@ -1,0 +1,30 @@
+# {{ ansible_managed }}
+
+version: '3'
+ 
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_ABSOLUTE_URI: {{ phpmyadmin_absolute_uri }}
+      PMA_HOSTS: {{ phpmyadmin_hosts|join(',', attribute='host') }}
+      PMA_PORTS: {{ phpmyadmin_hosts|join(',', attribute='port') }}
+      PMA_VERBOSES: {{ phpmyadmin_hosts|join(',', attribute='description') }}
+      PMA_ARBITRARY: {{ phpmyadmin_arbitrary | default(0) }}
+      UPLOAD_LIMIT: {{ phpmyadmin_upload_limit | default('2G') }}
+      MAX_EXECUTION_TIME: {{ phpmyadmin_max_execution_time | default(3600) }}
+      MEMORY_LIMIT: {{ phpmyadmin_memory_limit | default('1G') }}
+      HIDE_PHP_VERSION: {{ phpmyadmin_hide_php_version | default(1) }}
+{% if phpmyadmin_configuration_storage|default(false) %}
+      PMA_CONTROLHOST: {{ phpmyadmin_configuration_storage.host }}
+      PMA_CONTROLPORT: {{ phpmyadmin_configuration_storage.port | default(3306) }}
+      PMA_PMADB: {{ phpmyadmin_configuration_storage.name | default('phpmyadmin') }}
+      PMA_CONTROLUSER: {{ phpmyadmin_configuration_storage.username | default('phpmyadmin') }}
+      PMA_CONTROLPASS: {{ phpmyadmin_configuration_storage.password | default('phpmyadmin') }}
+{% endif %}
+    volumes:
+      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+    restart: {{ phpmyadmin_restart | default('always') }}
+    ports:
+      - {{ phpmyadmin_port | default(8201) }}:80

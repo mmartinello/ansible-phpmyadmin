@@ -1,8 +1,58 @@
 ---
 # Main configuration
 phpmyadmin_installed: false
+
+# PHPMyAdmin installation directory
 phpmyadmin_install_dir: /opt/phpmyadmin
-phpmyadmin_install_method: package
+
+# Installation method (archive | docker)
+phpmyadmin_install_method: docker
+
+# PHPMyAdmin Absolute URL
+phpmyadmin_absolute_uri: http://localhost/phpmyadmin
+
+# Hosts PHPMyAdmin can connect to
+phpmyadmin_hosts:
+  - host: mysql1
+    port: 3306
+    description: Example MySQL Server 1
+  - host: mysql2
+    port: 3307
+    description: Example MySQL Server 2
+
+# Permit arbitrary insert the destination MySQL host or not (0|1)
+phpmyadmin_arbitrary: 0
+
+# Upload limit
+phpmyadmin_upload_limit: 2G
+
+# Maximum execution time in seconds
+phpmyadmin_max_execution_time: 3600
+
+# Memory limit
+phpmyadmin_memory_limit: 1G
+
+# Hide PHP version or not (0|1)
+phpmyadmin_hide_php_version: 1
+
+# Configuration storage config
+phpmyadmin_configuration_storage:
+  host: localhost
+  port: 3306
+  name: phpmyadmin
+  username: phpmyadmin
+  password: password
+
+# Docker container restart policy
+phpmyadmin_restart: always
+
+# Docker container external port
+phpmyadmin_port: 8201
+
+# Pull the latest Docker image
+phpmyadmin_docker_pull: true
+
+# Archive URL
 phpmyadmin_archive_url: https://files.phpmyadmin.net/phpMyAdmin/4.9.1/phpMyAdmin-4.9.1-all-languages.tar.gz
 
 # HTTP Server configuration
@@ -10,7 +60,7 @@ phpmyadmin_configure_http_server: true
 phpmyadmin_http_server: nginx
 phpmyadmin_http_location: /phpmyadmin
 
-# Nginx variables
+# Nginx variables (for archive installation)
 nginx_conf_dest_dir: /etc/nginx/conf.d
 nginx_default_conf_file: /etc/nginx/conf.d/default.conf
 nginx_include_dir: /etc/nginx/include

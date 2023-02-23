@@ -1,0 +1,36 @@
+---
+- name: Install Docker
+  ansible.builtin.import_role:
+    name: mmartinello.docker
+
+- name: Install Docker PIP package
+  ansible.builtin.pip:
+    name: "docker"
+    state: present
+
+- name: Create the Docker Compose project destination directory
+  ansible.builtin.file:
+    path: "{{ phpmyadmin_install_dir }}"
+    state: directory
+    recurse: true
+
+- name: Create the Docker Compose configuration file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ phpmyadmin_install_dir }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Create the 'config.user.inc.php' file if not exists
+  ansible.builtin.file:
+    path: "{{ phpmyadmin_install_dir }}/config.user.inc.php"
+    state: touch
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Start the Docker Compose project
+  community.docker.docker_compose:
+    project_src: "{{ phpmyadmin_install_dir }}"
+    pull: "{{ phpmyadmin_docker_pull }}"

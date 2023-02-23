@@ -1,3 +1,9 @@
 ---
+- debug:
+    msg: "The installation method: {{ phpmyadmin_install_method }}"
+
 - include_tasks: install-archive.yml
   when: phpmyadmin_install_method == "archive"
+
+- include_tasks: install-docker.yml
+  when: phpmyadmin_install_method == "docker"
