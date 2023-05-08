@@ -30,7 +30,22 @@
     group: root
     mode: "0644"
 
-- name: Start the Docker Compose project
+- name: Start the Docker Compose project using Docker Compose v1
   community.docker.docker_compose:
     project_src: "{{ phpmyadmin_install_dir }}"
     pull: "{{ phpmyadmin_docker_pull }}"
+  when: phpmyadmin_docker_compose_version == 'v1'
+
+- name: Start the Docker Compose project using Docker Compose v2
+  when: phpmyadmin_docker_compose_version == 'v2'
+  block:
+    - name: Pull images
+      ansible.builtin.shell: cd {{ phpmyadmin_install_dir }} && docker compose pull
+      register: _command_output
+      changed_when: _command_output.rc == 0
+      when: phpmyadmin_docker_pull
+
+    - name: Start the Docker Compose project
+      ansible.builtin.shell: cd {{ phpmyadmin_install_dir }} && docker compose up -d
+      register: _command_output
+      changed_when: _command_output.rc == 0

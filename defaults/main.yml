@@ -8,6 +8,9 @@ phpmyadmin_install_dir: /opt/phpmyadmin
 # Installation method (archive | docker)
 phpmyadmin_install_method: docker
 
+# Docker Compose version (v1|v2)
+phpmyadmin_docker_compose_version: v2
+
 # PHPMyAdmin Absolute URL
 phpmyadmin_absolute_uri: http://localhost/phpmyadmin
 
