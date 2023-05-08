@@ -1,0 +1,18 @@
+location {{ phpmyadmin_http_location }}/ {
+{% if phpmyadmin_install_method == "archive" %}
+    alias {{ phpmyadmin_install_dir }};
+
+    index index.php;
+    try_files $uri $uri/ =404;
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $request_filename;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:{{ php_fpm_sock_path }};
+        fastcgi_index index.php;
+    }
+{% elif phpmyadmin_install_method == "docker" %}
+    proxy_pass http://localhost:{{ phpmyadmin_port }}/;
+{% endif %}
+}
