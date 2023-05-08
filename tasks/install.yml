@@ -1,7 +1,4 @@
 ---
-- debug:
-    msg: "The installation method: {{ phpmyadmin_install_method }}"
-
 - include_tasks: install-archive.yml
   when: phpmyadmin_install_method == "archive"
 

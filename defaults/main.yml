@@ -60,6 +60,9 @@ phpmyadmin_configure_http_server: true
 phpmyadmin_http_server: nginx
 phpmyadmin_http_location: /phpmyadmin
 
+# HTTP Server mode (subfolder|server)
+phpmyadmin_http_server_mode: subfolder
+
 # Nginx variables (for archive installation)
 nginx_conf_dest_dir: /etc/nginx/conf.d
 nginx_default_conf_file: /etc/nginx/conf.d/default.conf
